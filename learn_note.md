@@ -44,25 +44,26 @@
 
 + 在开发中，由于JavaScript没有提供其它语言常用的trim函数和isspace函数，需要自己开发一个
 
-	    function myTrim(str) 
-	    {
-		    reg = /(^\s+)|(\s+$)/g; // 这里用到了正则表达式，在后面章节会介绍到
-		    return str.replace(reg,"");
-	    }
+		function myTrim(str) 
+		{
+			reg = /(^\s+)|(\s+$)/g; // 这里用到了正则表达式，在后面章节会介绍到
+	    	return str.replace(reg,"");
+		}
 
 + 自定义isspace方法
-        function isEmpty(str) 
-        {
-            if ( str === undefined )
-                return true;
-            else if ( str == null )
-                return true;
-            else 
-            {
-                reg = /^\s+$/;
-                return reg.test(str);
-            }
-        }
+
+		function isEmpty(str) 
+    	{
+        	if ( str === undefined )
+            	return true;
+        	else if ( str == null )
+            	return true;
+        	else 
+        	{
+            	reg = /^\s+$/;
+            	return reg.test(str);
+        	}
+    	}
 
 
 
