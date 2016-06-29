@@ -282,18 +282,18 @@
 
 ### 4. JavaScript闭包
 
-+ 作用域和作用域链： 
+#### 1） 作用域和作用域链
 
-> 1.JavaScript首先会维护一个作用域范围，即定义变量时，作用域范围已经确定。
-> 2.程序运行时，再根据作用域范围来创建对象。先创建一个window对象，用来存放全局变量
-> 3.当调用某个方法时，会产生三个对象，第一个是方法的运行环境对象（上下文对象）指向作用域链对象，第二个是方法的活动对象，用来存放这个方法的局部变量，第三个时作用域链对象，维护一个表格，从0开始，依次指向此方法可以调用的对象资源
-> 4.调用方法会从作用域链的0索引开始查找所需要的变量，找到即停止寻找
+1. JavaScript首先会维护一个作用域范围，即定义变量时，作用域范围已经确定。
+2. 程序运行时，再根据作用域范围来创建对象。先创建一个window对象，用来存放全局变量
+3. 当调用某个方法时，会产生三个对象，第一个是方法的运行环境对象（上下文对象）指向作用域链对象，第二个是方法的活动对象，用来存放这个方法的局部变量，第三个时作用域链对象，维护一个表格，从0开始，依次指向此方法可以调用的对象资源
+4. 调用方法会从作用域链的0索引开始查找所需要的变量，找到即停止寻找
 
-+ 全局变量和局部变量
+#### 2） 全局变量和局部变量
 
-> 全局变量时在window对象中的变量；局部变量只有两种，一种是函数的形参，一种是函数内部定义的变量。JavaScript并没有块及的作用域，只有函数级作用域：变量在声明它们的函数体及其子函数内是可见的。
++ 全局变量时在window对象中的变量；局部变量只有两种，一种是函数的形参，一种是函数内部定义的变量。JavaScript并没有块及的作用域，只有函数级作用域：变量在声明它们的函数体及其子函数内是可见的。
 
-+ 闭包：（感觉类似于面向对象语言中的私有变量和其set/get方法）
+#### 3）  闭包（感觉类似于面向对象语言中的私有变量和其set/get方法）
 
 > 一个对象指向并可以使用一个不属于自己的局部变量，则其所在的作用域就形成了闭包
 
@@ -506,6 +506,13 @@
 	这说明了，作用域链是在函数创建时就已经有了。而在代码执行时，控制器会根据作用域链来寻找变量，这就是闭包的原理。
 		
 + 总结：
+	1. EC分为两个阶段，进入执行上下文和执行代码。
+	2. ECStack管理EC的压栈和出栈。
+	3. 每个EC对应一个作用域链Scope，VO|AO（AO，VO只能有一个），this。
+	4. 函数EC中的Scope在进入函数EC时创建，用来有序访问该EC对象AO中的变量和函数。
+	5. 函数EC中的AO在进入函数EC时，确定了Arguments对象的属性；在执行函数EC时，其它变量属性具体化。
+	6. 函数的[[scope]]属性在函数创建时就已经确定，并保持不变。
+
 作用域链、执行上下文、函数声明的先后顺序为：EC-->arguments-->[[Scope]]-->形参实例化-->函数声明-->变量实例化-->this
 而this创建遵循5个规则：
 
@@ -517,19 +524,146 @@
 
 由此也可以确定this的作用于是在调用时确定的，而不是的定义时。
 
-#### 1） 作用域和作用域链
-#### 2） 全局变量和局部变量
-#### 3）  闭包
+
+
+
 #### 4） ECMAScript5中属性的分类
+
++ 数据属性（Data Property）
++ 访问器属性（accerssor Property）
+
+		var obj = {
+			get 属性名() {
+                    		return 属性值；    
+			},
+			set 属性名(value) {
+                    		//TODO...
+			}
+		}
+> 注意：访问器属性的本质是两个函数，若读取访问属性的值，会自动调用get访问器；若为访问器属性赋值，会自动调用set访问器，并把等号右边的值作为参数传入。
+> 1. 访问器属性不能存储数据，所以访问器属性的值要依赖于一个数据属性来存储数据
+> 2. 访问器属性一般用于两个场合：用于冗余属性和有意控制数据的读写属性。
+
 #### 5） ECMAScript5中新添内容：属性(property)的特性(attribute)
+
++ 属性：对象中可以保存数据的变量，包括数据属性和访问器属性
+	- 属性的特性：包括数据属性的特性和访问器属性的特性
+		数据属性的特性：value，保存其值
+				writeable，是否可写
+				enumerable，是否可枚举（是否能用for...in列举属性和Object.keys()操作）
+				configurable，属性的特性是否可以被修改
+
+                用Object.defineProperty添加属性，并描述其特性
+                Object.defineProperty (
+                    obj, //对象名
+                    "property", //属性名
+                    { //特性描述符对象
+                        value:99, 
+                        writable:true, 
+                        enumerable:true, 
+                        configurable:true
+                    }
+                );
+                
+		访问器属性的特性：get，保存其get访问器
+				set，保存其set访问器
+				enumerable，同上
+				configurable，同上
+				
+		同样用Object.defineProperty添加属性，并描述其特性
+		
+                Object.defineProperty (
+                    obj, // 属性名
+                    "property", // 访问器属性名
+                    { // 特性描述符对象
+                        get : function () {},
+                        set : function () {},
+                        enumerable : true,
+                        configurable : true
+                    }
+                )
 
 ### 5. JavaScript DOM
 
 
 #### 1） 核心DOM
-    - 当前主流的动态web开发技术
-    - DHTML
++ 当前主流的动态web开发技术
+    
+> 动态：网页的内容，可以在不同的时间、针对不同的客户呈现出不同的内容。
+    JSP = HTML + JAVA
+    ASPX = HTML + C#
+    PHP = HTML + PHT
+    
++ DHTML
+> Dynamic HTML，动态HTML、动态网页，值得是页面表现、样式是可以随着用户的操作而发生不同的变化。DHTML = HTML + CSS + JAVASCRIPT，DHTML是把已经存在的三项技术整合起来进行组合应用，就是使用JavaScript来增删改查HTML元素和CSS样式，最终使得页面呈现一个更友好的交互效果。
+> DHTML对象：
+> 1. BOM : window/hsitory/location/document/navigtor/screen/event
+	用于JavaScript脚本与浏览器进行交互
+> 2. DOM：所有的HTML元素都是一个DOM对象
+	用于JavaScript脚本与当前显示的HTML文档进行交互
+
+							              window
+		_____________________________________________________________________________________________________________________________
+		|                       |                              |                         |                    |                     |
+		history               navigator                   document                   location              screen                 event
+		                                                       |
+		_______________________________________________________________________________________________________________
+		|                            |                  |                              |                               |
+		iframe                       anchor              image                         form                           table
+		                                                                               |                               |
+		                                                                    ________________________              TableCell
+		                                                                    |          |           |                   |
+		                                                                   input     select      Textarea          TableRow
     - DOM树
+	* DOM元素树：以document对象为根，每个HTML标签都是元素树的一个节点
+    
+		parentElementNode // Node类型，当前节点的唯一父节点对象
+		children // NodeList类型，当前节点的所有子节点，组成一个类数组对象
+		firstElementChild // Node类型，当前节点的第一个子节点
+		lastElementChild // Node类型，当前节点的最后一个子节点
+		previousElementSibling // Node类型，当前节点的上一个兄弟节点
+		nextElementSibling // Node类型，当前节点的下一个兄弟节点
+	* DOM节点树：以document对象为根，每个标签、文本、属性、注释都是一个节点树的一个节点。
+    
+		parentNode：Node类型，当前节点的唯一父节点对象
+		childNodes：NodeList类型，当前节点的所有子节点，组成一个类数组对象
+		firstChild：Node类型，当前节点的第一个子节点
+		lastChild：Node类型，当前节点的最后一个子节点
+		nextSibling：Node类型，当前节点的下一个兄弟节点
+		previousSibling：Node类型，当前节点的上一个兄弟节点
+	
+	* Node类型的常用属性
+	
+		innerHTML // 获取html内容
+		textContent // 获取纯文本内容
+		innerText // 获取纯文本内容
+		parentNode
+		childNodes
+		attributes 	// NamedNodeMap类型（一个类数组对象，有lenght属性，可以用下表访问其元素）
+				// element.attributes[下标].value
+				// element.attributes['属性名']
+				// element.getAttributeNode('属性名').value
+				// element.getAttributeNode('属性名')
+
+	* Node类型的常用方法
+	
+		getElementById() // 普通的元素节点没有这个方法
+		getElementsByName() // 普通的元素节点没有这个方法
+		getElementsByTagName()
+		getElementsByClassName()
+		appenChild()
+		removeChild()
+		replaceChild()
+		insertBefore()
+		createAttribute()
+		createElement()
+		createTextNode()
+		getAttribute()
+		setAttribute('属性名', '属性值') // IE8一下不支持，可以用element.setAttributeNode(attr)代替
+		removeAttribute('属性名')
+		hasAttribute('属性名') // 判断某元素是否有这个属性，返回true或false
+
+		
 
 ### 6. JavaScript BOM
 
