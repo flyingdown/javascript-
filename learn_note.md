@@ -388,6 +388,123 @@
 
 		}
 		
++ 示例
+
+		VO示例：
+		alert(x); // functionvar x = 10;
+		alert(x); // 10
+
+		x = 20;
+
+		functionx() {};
+
+		alert(x); // 20
+
+	进入执行上下文时
+	
+		ECObject={
+  			VO:{
+    				x:<referencetoFunctionDeclaration "x">
+  			}
+		};
+		
+	执行代码时：
+	
+		ECObject={
+  			VO:{
+    				x:20//与函数x同名，替换掉，先是10，后变成20
+  			}
+		};
+		
+	对于以上的过程，我们详细解释下。
+	在进入上下文的时候，VO会被填充函数声明； 同一阶段，还有变量声明“x”，但是，正如此前提到的，变量声明是在函数声明和函数形参之后，并且，变量声明不会对已经存在的同样名字的函数声明和函数形参发生冲突。因此，在进入上下文的阶段，VO填充为如下形式：
+
+		VO = {};
+
+		VO['x'] = <引用了函数声明'x'>
+
+		// 发现var x = 10;
+		// 如果函数“x”还未定义
+		// 则 "x" 为undefined, 但是，在我们的例子中
+		// 变量声明并不会影响同名的函数值
+
+		VO['x'] = <值不受影响，仍是函数>
+		
+	执行代码阶段，VO被修改如下：
+	
+		VO['x'] = 10;
+		VO['x'] = 20;
+		
+	如下例子再次看到在进入上下文阶段，变量存储在VO中（因此，尽管else的代码块永远都不会执行到，而“b”却仍然在VO中）
+	
+		if (true) {
+  			var a = 1;
+		} else {
+  			var b = 2;
+		}
+
+		alert(a); // 1
+		alert(b); // undefined, but not "b is not defined"
+
+
+		AO示例：
+		functiontest(a, b) {
+  			var c = 10;
+  			functiond() {}
+  			var e = function_e() {};
+  			(functionx() {});
+		}
+
+		test(10); // call
+
+	当进入test(10)的执行上下文时，它的AO为：
+	
+		testEC={
+			AO:{
+				arguments:{
+					callee:test
+					length:1,
+					0:10
+				},
+			a:10,
+			c:undefined,
+			d:<referencetoFunctionDeclaration "d">,
+			e:undefined
+			}
+		};
+		
+	由此可见，在建立阶段，VO除了arguments，函数的声明，以及参数被赋予了具体的属性值，其它的变量属性默认的都是undefined。函数表达式不会对VO造成影响，因此，(function x() {})并不会存在于VO中。
+	当执行test(10)时，它的AO为：
+	
+		testEC={
+			AO:{
+				arguments:{
+					callee:test,
+					length:1,
+					0:10
+				},
+				a:10,
+				c:10,
+				d:<referencetoFunctionDeclaration "d">,
+				e:<referencetoFunctionDeclaration "e">
+			}
+		};
+		
+	可见，只有在这个阶段，变量属性才会被赋具体的值。
+	
+	作用域链
+
+	> 在执行上下文的作用域中查找变量的过程被称为标识符解析(indentifier resolution)，这个过程的实现依赖于函数内部另一个同执行上下文相关联的对象——作用域链。作用域链是一个有序链表，其包含着用以告诉JavaScript解析器一个标识符到底关联着哪一个变量的对象。而每一个执行上下文都有其自己的作用域链Scope。
+	> 一句话：作用域链Scope其实就是对执行上下文EC中的变量对象VO|AO有序访问的链表。能按顺序访问到VO|AO，就能访问到其中存放的变量和函数的定义。
+	
+	Scope定义如下：
+	
+		Scope = AO|VO + [[Scope]]
+	其中，AO始终在Scope的最前端，不然为啥叫活跃对象呢。即：
+	
+		Scope = [AO].concat([[Scope]]);
+	这说明了，作用域链是在函数创建时就已经有了。而在代码执行时，控制器会根据作用域链来寻找变量，这就是闭包的原理。
+		
 + 总结：
 作用域链、执行上下文、函数声明的先后顺序为：EC-->arguments-->[[Scope]]-->形参实例化-->函数声明-->变量实例化-->this
 而this创建遵循5个规则：
