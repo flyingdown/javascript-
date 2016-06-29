@@ -107,10 +107,10 @@
 	- 每个时间分量（年月日时分秒）都有一对get/set方法，获取/设置该分量的值
 	- 命名：年/月/日 没有s，时/分/秒 有s
 	- 除了日之外，其余的都是从0开始计数，日从1开始计数
-
-		date.toLocaleString(); // 获得日期和时间的本地格式
-		date.toLocaleDateString(); // 仅获得日期部分的本地格式
-		date.toLocaleTimeString(); // 仅获得时间部分的本地格式
+	
+			date.toLocaleString(); // 获得日期和时间的本地格式
+			date.toLocaleDateString(); // 仅获得日期部分的本地格式
+			date.toLocaleTimeString(); // 仅获得时间部分的本地格式
 	
 	以上三种方法，在不同浏览器上输出的格式不同，所以一般会自定义一个函数用来格式化时间。
 	
@@ -138,16 +138,267 @@
 		}
 
 #### 6） Math类型
+
++ Math类型封装了所有有关数学计算的方法，Math类型不能new
++ Math.round(num); 四舍五入，返回一个Number类型
++ Math.ceil(num); 向上取整
++ Math.floor(num); 向下取整
++ Math.pow(x,y); x的y次方
++ Math.sqrt(num); num的平方根
++ Math.abs(num); num的绝对值
++ Math.max(v1,v2...); 最大值
++ Math.min(v1,v2...); 最小值
+        
 #### 7） Error类型
+
++ 错误或异常是导致程序运行停止的运行时异常状态，错误处理就是在出现异常状态时，保证程序不停止运行的机制
+        
++ Error类是所有错误对象的父类
+        
++ ECMAScript定义了六种子类型的错误：
+
+	- EvalError
+	- RangeError，参数范围错误，比如Number类型的toFixed方法的参数超出[0,20]范围时，就会产生此类异常
+        - ReferenceError，引用错误，找不到对象，只要使用未声明的变量都抛出此类异常
+        - SyntaxError，语法错误，抛出此类异常
+        - TypeError，错误的使用类型和类型的方法，就会抛出此类异常，比如调用String类型的toFixed方法
+        - URIError，URI错误
+
++ 如何处理错误：
+
+		try {
+			//可能出错的代码
+		} catch ( err ) {
+			//错误处理的代码
+			1.获得错误信息：err.message
+			2.获得错误类型：err.name        
+		} finally {
+			//最后执行的代码
+		}
+        
++ 主动抛出异常：throw
+
+		throw new Error("自定义错误信息");
+
+#### 8）Function类型
+
++ JavaScript中方法也是一个对象，方法名就是指向方法的变量名
+
+		function f(a,b) { return a-b; } 
+		相当于：
+		var f = new Function("a", "b", "return a-b" );
+        	// 在js解释器加载脚本时，会优先加载var声明变量和function声明的语句，所以function定义的函数，可以放置在任意位置，程序都能找到其声明
+
++ 以声明方式定义方法：
+
+        function 方法名（参数列表） 
+        { 
+        	方法体； 
+        	return 返回值
+        }; // 只有声明的方式定义才会被提前解析
+        
++ 以创建对象方式定义方法：
+
+        var 方法名 = new Function("参数1", ..., "方法体; return 返回值" ) // 最后一个参数是方法体
+        
++ 以匿名函数赋值的方式定义方法：
+
+        var 方法名 = function () 
+        { 
+        	return 返回值 
+        };
+
++ 重载：方法根据传入的参数列表不同，调用不同的方法
+
+> arguments对象是在方法对象中，保存所有参数的类数组对象(object like array)，其中arguments的length属性保存传入参数的个数，arguments的类数组保存传入的参数，可以用下标访问，如arguments[0]访问第一个参数，arguments[i]访问第i个参数
+
++ 匿名函数的2个用途：
+
+> 1.回调函数：函数何时执行，程序猿不需要控制，由所在环境自动调用执行
+>	应用：比较器、事件处理函数
+
+> 2.自调函数：匿名函数自己调用自己
+>	应用：当函数不需要重复使用时，直接使用匿名函数自调
+
+	- 语法：
+	
+		(function(参数列表) { 函数体 })(实参)
+            	(funciton () 
+		{
+			//代码
+		})();
+
+#### 9）Object类型
++ 一切对象的父对象，所有的对象都是从该对象继承来的
++ 创建对象的方式
+	- 方式一
+	
+			var obj = new Object(); // 对象原型是Object.prototype;
+			obj.name = 'zhangsan'; // 通过动态方式来增加属性
+			obj.name = function () { }; // 通过动态方式来增加方法
+	
+	- 方式二
+
+			var obj = {}; // json语法,对象原型是Object.prototype
+
+	- 方式三
+
+			function Emp() {}; var obj = new Emp(); // 对象原型是Emp.prototype;
+			// 当原型在内部有return this;时，可以省略new关键字。
+
+	- 方式四
+
+			var obj = Object.create(proto);
+		
++ prototype属性
+
+> 具有同一个类型的对象，都引用一个相同的隐藏的prototype对象，从而共享相同的方法属性，同样我们可以通过这个属性动态的给对象增加属性和方法。
+> 继承的实现可以使用Object.setPrototypeOf ( chlid, parent )，关联连个对象，并设置父子关系
+
++ 基于原型的对象创建和继承
+
+> 任何一个js对象都有一个原型对象，即它的父对象；所有js对象的最终父对象都是Object.prototype，而Object.prototype的父对象是null，null没有父对象。
+
+#### 10）Global类型
+
+用来收集一些公用函数，如parseInt()之类的函数
 
 ### 3. JavaScript运算
 
 
 #### 1） 关系运算
+
+和C语言的关系运算大致相同，具体可以查看手册，这里只说下需要注意的地方
+
+> 关系运算比较中，所有和number比较的都自动转换为number，而在"+"运算中，所有和str加运算的都自动转换为str
+> NaN从类型上看是number类型
+> undefined是从null继承过来的，用来表示基本类型的未定义，null用来表示对象的未定义，所以undefined==null为true，而undefined===null为false
+> isNaN（X）；// X是数字或者在关系运算中能自动转换为数字则返回false，不是数字的返回true，此函数只判断值，不判断类型
+> unicode中汉字的范围 >='\u4E00' && <='\u9FA5'
+
 #### 2） 逻辑运算
+
+请自行查看手册
 
 ### 4. JavaScript闭包
 
++ 作用域和作用域链： 
+
+> 1.JavaScript首先会维护一个作用域范围，即定义变量时，作用域范围已经确定。
+> 2.程序运行时，再根据作用域范围来创建对象。先创建一个window对象，用来存放全局变量
+> 3.当调用某个方法时，会产生三个对象，第一个是方法的运行环境对象（上下文对象）指向作用域链对象，第二个是方法的活动对象，用来存放这个方法的局部变量，第三个时作用域链对象，维护一个表格，从0开始，依次指向此方法可以调用的对象资源
+> 4.调用方法会从作用域链的0索引开始查找所需要的变量，找到即停止寻找
+
++ 全局变量和局部变量
+
+> 全局变量时在window对象中的变量；局部变量只有两种，一种是函数的形参，一种是函数内部定义的变量。JavaScript并没有块及的作用域，只有函数级作用域：变量在声明它们的函数体及其子函数内是可见的。
+
++ 闭包：（感觉类似于面向对象语言中的私有变量和其set/get方法）
+
+> 一个对象指向并可以使用一个不属于自己的局部变量，则其所在的作用域就形成了闭包
+
+	- 闭包的三个特点：
+        	* 1.局部变量
+		* 2.内嵌函数
+		* 3.外部使用
+
++ 例子：
+
+		var getValue, setValue;
+		(
+			function ()
+			 {
+				var secret = 0;
+				getValue = function () 
+				{
+					return secret;
+				};
+
+				setValue = function (v)
+				{
+					secret = v;
+				}
+			}
+		)()
+		
++ 是不是被上面所说的搞晕了，其实弄明白了JavaScript的内部机制，才能真正理解闭包的原理
+
+> JavaScript是解释性语言，其实，每当负责解释脚本的控制器到达ECMAScript可执行代码的时候，控制器就进入了一个执行上下文(execute context)
+
+> javascript中，EC(execute context)分为三种：
+
+> - 全局级别的代码 – 这个是默认的代码运行环境，一旦代码被载入，引擎最先进入的就是这个环境。
+> - 函数级别的代码 – 当执行一个函数时，运行函数体中的代码。
+> - Eval的代码 – 在Eval函数内运行的代码。
+
+> EC建立分为两个阶段：进入执行上下文和执行阶段。
+> - 1.进入上下文阶段：发生在函数调用时，但是在执行具体代码之前（比如，对函数参数进行具体化之前）
+> - 2.执行代码阶段：变量赋值，函数引用，执行其他代码。
+> 我们可以将EC看做是一个对象。
+
+		EC={
+    			VO:{/* 函数中的arguments对象, 参数, 内部的变量以及函数声明 */},
+			this:{},
+			Scope:{ /* VO以及所有父执行上下文中的VO */}
+		}
+		
+> VO|AO
+
+> VO
+
+> 每一个EC都对应一个变量对象VO，在该EC中定义的所有变量和函数都存放在其对应的VO中。
+> VO分为全局上下文VO（全局对象，Global object，我们通常说的global对象）和函数上下文的AO。
+
+		VO: {
+  			// 上下文中的数据 (变量声明（var）, 函数声明（FD), 函数形参（function arguments）)
+		}
+
+>> 1. 进入执行上下文时，VO的初始化过程具体如下：
+>> 函数的形参（当进入函数执行上下文时）
+>> —— 变量对象的一个属性，其属性名就是形参的名字，其值就是实参的值；对于没有传递的参数，其值为undefined
+
+>> 函数声明（FunctionDeclaration, FD） ——变量对象的一个属性，其属性名和值都是函数对象创建出来的；如果变量对象已经包含了相同名字的属性，则替换它的值
+
+>> 变量声明（var，VariableDeclaration） —— 变量对象的一个属性，其属性名即为变量名，其值为undefined;如果变量名和已经声明的函数名或者函数的参数名相同，则不会影响已经存在的属性。
+
+>> 注意：该过程是有先后顺序的。
+
+>> 2. 执行代码阶段时，VO中的一些属性undefined值将会确定。
+
+
+> AO
+
+> 在函数的执行上下文中，VO是不能直接访问的。它主要扮演被称作活跃对象（activation object）（简称：AO）的角色。
+> 这句话怎么理解呢，就是当EC环境为函数时，我们访问的是AO，而不是VO。
+
+		VO(functionContext) === AO;
+> AO是在进入函数的执行上下文时创建的，并为该对象初始化一个arguments属性，该属性的值为Arguments对象。
+
+		AO = {
+  			arguments: {
+    				callee:,
+    				length:,
+    				properties-indexes: //函数传参参数值
+  			}
+		};
+		
+> FD的形式只能是如下这样：
+
+		functionf(){
+
+		}
+		
++ 总结：
+作用域链、执行上下文、函数声明的先后顺序为：EC-->arguments-->[[Scope]]-->形参实例化-->函数声明-->变量实例化-->this
+而this创建遵循5个规则：
+
+	- 1.Regular function (myFunction(1,2,3)). The value of this points to the global object (i.e. window).普通函数调用，this等于window
+	- 2.Object method (myObject.myFunction(1,2,3)). The value of this points to the object containing the function (i.e. the object before the dot). The value is myObjectin our example.作为对象方法调用，this等于对象
+	- 3.Callback for setTimeout() or setInterval(). The value of this points to the global object (i.e. window).作为回调函数，this等于window
+	- 4.Callback for call() or apply(). The value of this is the first argument ofcall()/apply().call和apply会指定this的值，this等于call和apply的第一个参数
+	- 5.As constructor (new myFunction(1,2,3)). The value of this is an empty object withmyFunction.prototype as prototype.作为构造函数，this等于要创建的对象，其原型是构造函数的prototype属性。
+
+由此也可以确定this的作用于是在调用时确定的，而不是的定义时。
 
 #### 1） 作用域和作用域链
 #### 2） 全局变量和局部变量
