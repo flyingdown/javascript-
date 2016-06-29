@@ -595,10 +595,13 @@
     PHP = HTML + PHT
     
 + DHTML
+
 > Dynamic HTML，动态HTML、动态网页，值得是页面表现、样式是可以随着用户的操作而发生不同的变化。DHTML = HTML + CSS + JAVASCRIPT，DHTML是把已经存在的三项技术整合起来进行组合应用，就是使用JavaScript来增删改查HTML元素和CSS样式，最终使得页面呈现一个更友好的交互效果。
 > DHTML对象：
+
 > 1. BOM : window/hsitory/location/document/navigtor/screen/event
 	用于JavaScript脚本与浏览器进行交互
+
 > 2. DOM：所有的HTML元素都是一个DOM对象
 	用于JavaScript脚本与当前显示的HTML文档进行交互
 
@@ -615,25 +618,27 @@
 		                                                                    |          |           |                   |
 		                                                                   input     select      Textarea          TableRow
     - DOM树
-	* DOM元素树：以document对象为根，每个HTML标签都是元素树的一个节点
     
+	* DOM元素树：以document对象为根，每个HTML标签都是元素树的一个节点
+	
 		parentElementNode // Node类型，当前节点的唯一父节点对象
 		children // NodeList类型，当前节点的所有子节点，组成一个类数组对象
 		firstElementChild // Node类型，当前节点的第一个子节点
 		lastElementChild // Node类型，当前节点的最后一个子节点
 		previousElementSibling // Node类型，当前节点的上一个兄弟节点
 		nextElementSibling // Node类型，当前节点的下一个兄弟节点
-	* DOM节点树：以document对象为根，每个标签、文本、属性、注释都是一个节点树的一个节点。
-    
+
+		* DOM节点树：以document对象为根，每个标签、文本、属性、注释都是一个节点树的一个节点。
+		
 		parentNode：Node类型，当前节点的唯一父节点对象
 		childNodes：NodeList类型，当前节点的所有子节点，组成一个类数组对象
 		firstChild：Node类型，当前节点的第一个子节点
 		lastChild：Node类型，当前节点的最后一个子节点
 		nextSibling：Node类型，当前节点的下一个兄弟节点
 		previousSibling：Node类型，当前节点的上一个兄弟节点
-	
+
 	* Node类型的常用属性
-	
+		
 		innerHTML // 获取html内容
 		textContent // 获取纯文本内容
 		innerText // 获取纯文本内容
@@ -646,7 +651,7 @@
 				// element.getAttributeNode('属性名')
 
 	* Node类型的常用方法
-	
+		
 		getElementById() // 普通的元素节点没有这个方法
 		getElementsByName() // 普通的元素节点没有这个方法
 		getElementsByTagName()
