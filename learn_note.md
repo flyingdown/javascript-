@@ -68,9 +68,76 @@
 
 
 #### 3） Number类型
-#### 4） 内置对象和内置类型
-#### 5） Math类型
-#### 6） Date类型
+
++ num.toFixed(n); 按照n为小数四舍五入，返回一个字符串
++ num.toString(n); 按照n进制输出数字的字符串
+
+#### 4） Array类型
+
++ length属性返回数组的长度
++ toString()方法，返回数组的字符串表示
++ concat()方法，用于连接两个数组，不修改原数组
++ join()方法，用于将数组中的各元素连接成字符串
++ reverse()方法，用于将数组反转，直接修改原数组
++ slice(index1,index2)方法，用于截取数组的一部分，并以数组的形式返回，截取下标index1到index2的部分，左闭右开区间
++ splice(index,count)方法，从index位置开始删除count个元素，直接修改原数组
++ splice(index,count,val1,val2...),从index位置开始将count个元素替换为val1，val2,...；count为0时，即将val1,,val2...插入到index位置后，其返回值为被删除的元素
+
++ 数组可以当做堆栈和队列来使用
+	- push(); // 从后面压入
+	- pop(); // 从后面弹出，返回弹出的元素
+	- unshift();//从前面压入
+	- shift(); // 从前面弹出，返回弹出的元素
+
+#### 5） Date类型
+
+具体API可以查看手册，这里只提供一个具体例子来感受Date类型
+
++ Date常用方法
+
+		// 封装一个时间点数据，提供对时间、日期的常用API
+		var date = new Date(); // 创建了一个Date类型的对象，并且获取当前时间点
+
+		// 自定义时间
+		var date = new Date("2016/4/4 18:01"); // 创建了一个Date类型的对象，并用输入的时间初始化
+		var date = new Date(毫秒数);
+
++ API：可以用三句话总结
+
+	- 每个时间分量（年月日时分秒）都有一对get/set方法，获取/设置该分量的值
+	- 命名：年/月/日 没有s，时/分/秒 有s
+	- 除了日之外，其余的都是从0开始计数，日从1开始计数
+
+		date.toLocaleString(); // 获得日期和时间的本地格式
+		date.toLocaleDateString(); // 仅获得日期部分的本地格式
+		date.toLocaleTimeString(); // 仅获得时间部分的本地格式
+	
+	以上三种方法，在不同浏览器上输出的格式不同，所以一般会自定义一个函数用来格式化时间。
+	
+		function timeFormat ( date ) 
+		{
+			var week = [  '日', '一', '二', '三', '四', '五', '六' ] ;
+			var year = date.getFullYear()+"年";
+			var month = date.getMonth()+"月";
+			var day = date.getDate() + "日";
+			var wk = "星期"+week[date.getDay()];
+
+			var hours =  date.getHours();
+			var flag =hours<=12?"上午":"下午";
+			h = h>12?h-12:h;
+			h = h<10?"0"+h:""+h;
+
+			var  mins = date.getMinutes();
+			mins = mins < 10 ? "0"+mins : ""+mins;
+
+			var secs = date.getSeconds();
+			secs = secs < 10 ? "0"+secs : "" + secs;
+
+			return year + month + day + " " + hours + ":" + mins + ":" + secs;
+
+		}
+
+#### 6） Math类型
 #### 7） Error类型
 
 ### 3. JavaScript运算
