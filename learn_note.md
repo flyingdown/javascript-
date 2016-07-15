@@ -674,4 +674,26 @@
 
 ### 6. JavaScript BOM
 
+#### 1）概述
+Window : 该类型的对象指当前浏览器窗口，是一个全局对象，其中所有属性可以直接使用，即：
+
+    		Window.screen   <==>   screen  <==>  Window.window.screen  <==>  window.screen
+    	
+同样的，只要是Window的属性或者方法，都可以是如此使用
+
+    		Window.alert() <==> alert() <==> Window.window.alert() <==> window.alert()
+    	
+其底层代码大致可以认为是以下：
+
+		function Window () {
+		}
+		Window.window = new Window();
+		Window.document = new Document();
+		Window.screen = new Screen ();
+		Window.location = new Location();
+		Window.history = new History();
+		Window.navigator = new Navigator();
+		Window.event = new Event();
+		Window.alert = fucntion () { ... }
+
 
