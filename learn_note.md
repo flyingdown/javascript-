@@ -617,56 +617,58 @@
 		                                                                    ________________________              TableCell
 		                                                                    |          |           |                   |
 		                                                                   input     select      Textarea          TableRow
-    - DOM树
+
+
++ DOM树
     
 	* DOM元素树：以document对象为根，每个HTML标签都是元素树的一个节点
-	
-		parentElementNode // Node类型，当前节点的唯一父节点对象
-		children // NodeList类型，当前节点的所有子节点，组成一个类数组对象
-		firstElementChild // Node类型，当前节点的第一个子节点
-		lastElementChild // Node类型，当前节点的最后一个子节点
-		previousElementSibling // Node类型，当前节点的上一个兄弟节点
-		nextElementSibling // Node类型，当前节点的下一个兄弟节点
 
-		* DOM节点树：以document对象为根，每个标签、文本、属性、注释都是一个节点树的一个节点。
+			parentElementNode // Node类型，当前节点的唯一父节点对象
+			children // NodeList类型，当前节点的所有子节点，组成一个类数组对象
+			firstElementChild // Node类型，当前节点的第一个子节点
+			lastElementChild // Node类型，当前节点的最后一个子节点
+			previousElementSibling // Node类型，当前节点的上一个兄弟节点
+			nextElementSibling // Node类型，当前节点的下一个兄弟节点
+
+	* DOM节点树：以document对象为根，每个标签、文本、属性、注释都是一个节点树的一个节点。
 		
-		parentNode：Node类型，当前节点的唯一父节点对象
-		childNodes：NodeList类型，当前节点的所有子节点，组成一个类数组对象
-		firstChild：Node类型，当前节点的第一个子节点
-		lastChild：Node类型，当前节点的最后一个子节点
-		nextSibling：Node类型，当前节点的下一个兄弟节点
-		previousSibling：Node类型，当前节点的上一个兄弟节点
+			parentNode：Node类型，当前节点的唯一父节点对象
+			childNodes：NodeList类型，当前节点的所有子节点，组成一个类数组对象
+			firstChild：Node类型，当前节点的第一个子节点
+			lastChild：Node类型，当前节点的最后一个子节点
+			nextSibling：Node类型，当前节点的下一个兄弟节点
+			previousSibling：Node类型，当前节点的上一个兄弟节点
 
 	* Node类型的常用属性
-		
-		innerHTML // 获取html内容
-		textContent // 获取纯文本内容
-		innerText // 获取纯文本内容
-		parentNode
-		childNodes
-		attributes 	// NamedNodeMap类型（一个类数组对象，有lenght属性，可以用下表访问其元素）
+
+			innerHTML // 获取html内容
+			textContent // 获取纯文本内容
+			innerText // 获取纯文本内容
+			parentNode
+			childNodes
+			attributes 	// NamedNodeMap类型（一个类数组对象，有lenght属性，可以用下表访问其元素）
 				// element.attributes[下标].value
 				// element.attributes['属性名']
 				// element.getAttributeNode('属性名').value
 				// element.getAttributeNode('属性名')
 
 	* Node类型的常用方法
-		
-		getElementById() // 普通的元素节点没有这个方法
-		getElementsByName() // 普通的元素节点没有这个方法
-		getElementsByTagName()
-		getElementsByClassName()
-		appenChild()
-		removeChild()
-		replaceChild()
-		insertBefore()
-		createAttribute()
-		createElement()
-		createTextNode()
-		getAttribute()
-		setAttribute('属性名', '属性值') // IE8一下不支持，可以用element.setAttributeNode(attr)代替
-		removeAttribute('属性名')
-		hasAttribute('属性名') // 判断某元素是否有这个属性，返回true或false
+
+			getElementById() // 普通的元素节点没有这个方法
+			getElementsByName() // 普通的元素节点没有这个方法
+			getElementsByTagName()
+			getElementsByClassName()
+			appenChild()
+			removeChild()
+			replaceChild()
+			insertBefore()
+			createAttribute()
+			createElement()
+			createTextNode()
+			getAttribute()
+			setAttribute('属性名', '属性值') // IE8一下不支持，可以用element.setAttributeNode(attr)代替
+			removeAttribute('属性名')
+			hasAttribute('属性名') // 判断某元素是否有这个属性，返回true或false
 
 		
 
