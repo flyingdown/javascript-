@@ -670,6 +670,20 @@
 			removeAttribute('属性名')
 			hasAttribute('属性名') // 判断某元素是否有这个属性，返回true或false
 
+#### 2） HTML DOM
+
+	以一种简便的方法访问DOM树----将网页中的每一中标签都对象化
+	
+						Document
+	_____________________________________________________________________________________
+	|                      |                             |                              |
+	Anchor                image                         Form                          Table
+	                                                     |                              |
+	                                       	_________________________             _____________
+	                                        |            |          |             |           |
+	                                       Input      Select    Textarea       TableRow    TableCell
+	                                                     |
+	                                                  Option
 		
 
 ### 6. JavaScript BOM
