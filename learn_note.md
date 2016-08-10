@@ -696,6 +696,28 @@
 |元素添加属性|e.setAttribute()、e.setAttributeNode()|img.src=""/img.id=""/img.title=""/img.style.display=""/img.className=""|
 |使用场合|增、删、改、查元素|读取和修改元素的属性|
 
+
++ 常见HTML DOM对象
+
+	- Image对象 （可以同new关键字创建对象）
+	- Table对象
+	- TableRow对象（表示<tr>标签）
+	- Form对象
+	- Text对象
+	- Checkbox对象
+	- Select对象
+	- Option对象（可以同new关键字创建对象，var opt = new Option(text, value)）
+
++ 几个比较特别的属性
+
+		在HTML中，只要出现即代表生效，而在HTML DOM中都是boolean类型，需要赋值为true/false
+	 	HTML中              HTML DOM
+		1.readonly <---> readOnly
+		2.disable <---> disabled
+		3.checked <---> checked
+		4.selected <---> selected
+		5.multiple <---> multiple
+
 ### 6. JavaScript BOM
 
 #### 1）概述
