@@ -672,19 +672,29 @@
 
 #### 2） HTML DOM
 
-	以一种简便的方法访问DOM树----将网页中的每一中标签都对象化
++ 以一种简便的方法访问DOM树----将网页中的每一中标签都对象化
+
 	
-						Document
-	_____________________________________________________________________________________
-	|                      |                             |                              |
-	Anchor                image                         Form                          Table
-	                                                     |                              |
-	                                       	_________________________             _____________
-	                                        |            |          |             |           |
-	                                       Input      Select    Textarea       TableRow    TableCell
-	                                                     |
-	                                                  Option
-		
+		                                      Document
+		_____________________________________________________________________________________
+		|                      |                             |                              |
+		Anchor                image                         Form                          Table
+		                                                     |                              |
+		                                       	_________________________             _____________
+		                                        |            |          |             |           |
+		                                       Input      Select    Textarea       TableRow    TableCell
+		                                                     |
+		                                                  Option
+	
+
++ 核心DOM与HTML DOM的区别
+
+|比较项目|核心DOM|HTML DOM|
+|--------|-------|--------|
+|对象|Document、Node、ElementNode、TextNode、AttributeNode、CommentNode、NodeList|Image、Table、Form、Input、Select等，HTML标签对象化|
+|创建新元素|document.createElement('img');|new Image();|
+|元素添加属性|e.setAttribute()、e.setAttributeNode()|img.src=""/img.id=""/img.title=""/img.style.display=""/img.className=""|
+|使用场合|增、删、改、查元素|读取和修改元素的属性|
 
 ### 6. JavaScript BOM
 
